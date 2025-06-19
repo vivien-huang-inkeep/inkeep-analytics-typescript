@@ -16,7 +16,7 @@ export const tool$feedbackSubmit: ToolDefinition<typeof args> = {
 
 Logs new feedback or updates an existing one.
 
-**API Key Types:** \`API\``,
+**API Key Types:** API`,
   args,
   tool: async (client, args, ctx) => {
     const [result, apiCall] = await feedbackSubmit(
