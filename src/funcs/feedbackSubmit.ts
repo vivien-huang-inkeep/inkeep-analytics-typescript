@@ -26,15 +26,20 @@ import { APICall, APIPromise } from "../types/async.js";
 import { Result } from "../types/fp.js";
 
 /**
- * Submit Feedback
+ * Log Feedback
+ *
+ * @remarks
+ * Logs new feedback or updates an existing one.
+ *
+ * **API Key Types:** API
  */
 export function feedbackSubmit(
   client: InkeepAnalyticsCore,
-  request: operations.SubmitFeedbackRequestBody,
+  request: operations.LogFeedbackRequestBody,
   options?: RequestOptions,
 ): APIPromise<
   Result<
-    operations.SubmitFeedbackResponseBody,
+    operations.LogFeedbackResponseBody,
     | errors.BadRequest
     | errors.Unauthorized
     | errors.Forbidden
@@ -59,12 +64,12 @@ export function feedbackSubmit(
 
 async function $do(
   client: InkeepAnalyticsCore,
-  request: operations.SubmitFeedbackRequestBody,
+  request: operations.LogFeedbackRequestBody,
   options?: RequestOptions,
 ): Promise<
   [
     Result<
-      operations.SubmitFeedbackResponseBody,
+      operations.LogFeedbackResponseBody,
       | errors.BadRequest
       | errors.Unauthorized
       | errors.Forbidden
@@ -84,7 +89,7 @@ async function $do(
 > {
   const parsed = safeParse(
     request,
-    (value) => operations.SubmitFeedbackRequestBody$outboundSchema.parse(value),
+    (value) => operations.LogFeedbackRequestBody$outboundSchema.parse(value),
     "Input validation failed",
   );
   if (!parsed.ok) {
@@ -109,7 +114,7 @@ async function $do(
   const context = {
     options: client._options,
     baseURL: options?.serverURL ?? client._baseURL ?? "",
-    operationID: "submitFeedback",
+    operationID: "logFeedback",
     oAuth2Scopes: [],
 
     resolvedSecurity: requestSecurity,
@@ -162,7 +167,7 @@ async function $do(
   };
 
   const [result] = await M.match<
-    operations.SubmitFeedbackResponseBody,
+    operations.LogFeedbackResponseBody,
     | errors.BadRequest
     | errors.Unauthorized
     | errors.Forbidden
@@ -177,7 +182,7 @@ async function $do(
     | UnexpectedClientError
     | SDKValidationError
   >(
-    M.json(200, operations.SubmitFeedbackResponseBody$inboundSchema),
+    M.json(200, operations.LogFeedbackResponseBody$inboundSchema),
     M.jsonErr(400, errors.BadRequest$inboundSchema, {
       ctype: "application/problem+json",
     }),
